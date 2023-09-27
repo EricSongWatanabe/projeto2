@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "projeto2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-projeto2-Debug-54a0ea976c0174522f67.json",
+					"jsonFile" : "target-projeto2-Debug-1f7a4cab16960ad96f36.json",
 					"name" : "projeto2",
 					"projectIndex" : 0
 				}
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/unifewatanabe/CLionProjects/projeto2/cmake-build-debug",
-		"source" : "C:/Users/unifewatanabe/CLionProjects/projeto2"
+		"build" : "C:/Users/unifewatanabe/Documents/projeto2/cmake-build-debug",
+		"source" : "C:/Users/unifewatanabe/Documents/projeto2"
 	},
 	"version" : 
 	{
