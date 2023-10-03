@@ -16,6 +16,10 @@ int criarCliente(ListaDeClientes *lc) {
     scanf("%d", &lc->c[lc->qtd].cpf);
     printf("\nTipo de Conta (0 = Comum | 1 = Plus): ");
     scanf("%d", &lc->c[lc->qtd].tipoDeConta);
+    if (lc->c[lc->qtd].tipoDeConta != 1 && lc->c[lc->qtd].tipoDeConta != 0){
+      printf("\nNumero invalido!\n");
+      return 0;
+    }
     printf("\nValor Inicial: ");
     scanf("%d", &lc->c[lc->qtd].valor);
     printf("\nSenha: ");
@@ -28,7 +32,7 @@ int criarCliente(ListaDeClientes *lc) {
     printf("\nCPF: %d", lc->c[lc->qtd].cpf);
     printf("\nTipo de Conta: %d", lc->c[lc->qtd].tipoDeConta);
     printf("\nValor Inicial: %d", lc->c[lc->qtd].valor);
-    printf("\nSenha: %s", lc->c[lc->qtd].senha);
+    printf("\nSenha: %s\n\n", lc->c[lc->qtd].senha);
     
     lc->qtd = lc->qtd + 1;
     return 0;
@@ -40,6 +44,13 @@ int deletarCliente(ListaDeClientes *lc) {
 }
 
 int listarCliente(ListaDeClientes lc) {
-    printf("\nListar clientes\n");
+    printf("\nListar CLientes\n");
+    for (int i = 0; i < lc.qtd; i++){
+        printf("\nCliente %d:\n", i + 1);
+        printf("Nome: %s\n", lc.c[i].nome);
+        printf("CPF: %d\n", lc.c[i].cpf);
+        printf("Tipo de Conta: %d\n", lc.c[i].tipoDeConta);
+        printf("Valor: %d\n", lc.c[i].valor);
+    }
     return 0;
 }
