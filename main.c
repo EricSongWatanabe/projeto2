@@ -24,6 +24,9 @@ int main() {
         else if (opcao == 3) {
             listarCliente(lc);
         }
+        else if (opcao == 4) {
+            debito(&lc);
+        }
         else {
             printf("Opcao nao existente!\n");
         }

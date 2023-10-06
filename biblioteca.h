@@ -19,6 +19,7 @@ void printMenu();
 int criarCliente(ListaDeClientes *lc);
 int deletarCliente(ListaDeClientes *lc);
 int listarCliente(ListaDeClientes lc);
+int debito(ListaDeClientes *lc);
 
 
 int salvarLista(ListaDeClientes lc, char nome[]);

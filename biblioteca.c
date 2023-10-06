@@ -9,19 +9,34 @@ int criarCliente(ListaDeClientes *lc) {
     printf("\nCriar cliente\n");
     int c;
     while ((c = getchar()) != '\n' && c != EOF) { }
+
     printf("\nNome: ");
     fgets(lc->c[lc->qtd].nome, 20, stdin);
     lc->c[lc->qtd].nome[strcspn(lc->c[lc->qtd].nome, "\n")] = '\0';
+
     printf("\nCPF: ");
     scanf("%d", &lc->c[lc->qtd].cpf);
-    printf("\nTipo de Conta (0 = Comum | 1 = Plus): ");
+    int encontrado = 0;  
+    for (int i = 0; i < lc->qtd; i++) {
+        if (lc->c[i].cpf == lc->c[lc->qtd].cpf) {
+            printf("\nCPF ja existente!\n");
+            encontrado = 1; 
+            return 0;
+        }
+    }
+    if (!encontrado) {
+        printf("\nTipo de Conta (0 = Comum | 1 = Plus): ");
+    }
+    
     scanf("%d", &lc->c[lc->qtd].tipoDeConta);
     if (lc->c[lc->qtd].tipoDeConta != 1 && lc->c[lc->qtd].tipoDeConta != 0){
       printf("\nNumero invalido!\n");
       return 0;
     }
+
     printf("\nValor Inicial: ");
     scanf("%d", &lc->c[lc->qtd].valor);
+
     printf("\nSenha: ");
     while ((c = getchar()) != '\n' && c != EOF) { }
     fgets(lc->c[lc->qtd].senha, 20, stdin);
@@ -40,6 +55,27 @@ int criarCliente(ListaDeClientes *lc) {
 
 int deletarCliente(ListaDeClientes *lc) {
     printf("\nDeletar cliente\n");
+    int cpf;
+    printf("Digite o CPF do cliente que deseja deletar: ");
+    scanf("%d", &cpf);
+
+    int encontrado = 0;  
+
+    for (int i = 0; i < lc->qtd; i++) {
+        if (lc->c[i].cpf == cpf) {
+            for (int j = i; j < lc->qtd - 1; j++) {
+                lc->c[j] = lc->c[j + 1];
+            }
+            lc->qtd--;
+            printf("Cliente com CPF %d foi deletado com sucesso.\n", cpf);
+            encontrado = 1; 
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Cliente com CPF %d não encontrado na lista.\n", cpf);
+    }
+
     return 0;
 }
 
@@ -53,4 +89,8 @@ int listarCliente(ListaDeClientes lc) {
         printf("Valor: %d\n", lc.c[i].valor);
     }
     return 0;
+}
+
+int debito(ListaDeClientes *lc) {
+    printf("\nDebito\n");
 }
