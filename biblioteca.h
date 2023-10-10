@@ -3,7 +3,7 @@
 
 typedef struct cliente {
     char nome[20];
-    int cpf;
+    long cpf;
     int tipoDeConta;
     int valor;
     char senha[20];
@@ -15,6 +15,8 @@ typedef struct {
 } ListaDeClientes;
 
 void printMenu();
+
+int buscaCliente(ListaDeClientes lc, long cpf);
 
 int criarCliente(ListaDeClientes *lc);
 int deletarCliente(ListaDeClientes *lc);

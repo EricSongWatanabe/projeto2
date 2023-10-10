@@ -5,6 +5,16 @@ void printMenu(){
     printf("\n========= MENU =========\n[1] Novo Cliente\n[2] Apagar Cliente\n[3] Listar Clientes\n[4] Debito\n[5] Deposito\n[6] Extrato\n[7] Transferencia entre Contas\n[0] Sair\n\nEscolha uma opcao: ");
 }
 
+int buscaCliente(ListaDeClientes lc, long cpf){
+    int index = 0;
+    for (index; index < 1000; index++){
+        if (lc.c[lc.qtd].cpf == cpf){
+            return index;
+        }
+    }
+    return -1;
+}
+
 int criarCliente(ListaDeClientes *lc) {
     printf("\nCriar cliente\n");
     int c;
@@ -14,17 +24,11 @@ int criarCliente(ListaDeClientes *lc) {
     fgets(lc->c[lc->qtd].nome, 20, stdin);
     lc->c[lc->qtd].nome[strcspn(lc->c[lc->qtd].nome, "\n")] = '\0';
 
+    long cpf;
     printf("\nCPF: ");
-    scanf("%d", &lc->c[lc->qtd].cpf);
-    int encontrado = 0;  
-    for (int i = 0; i < lc->qtd; i++) {
-        if (lc->c[i].cpf == lc->c[lc->qtd].cpf) {
-            printf("\nCPF ja existente!\n");
-            encontrado = 1; 
-            return 0;
-        }
-    }
-    if (!encontrado) {
+    scanf("%ld", &cpf);
+    int busca = buscaCliente(ListaDeClientes, cpf);
+    if (busca == -1) {
         printf("\nTipo de Conta (0 = Comum | 1 = Plus): ");
     }
     
@@ -93,4 +97,45 @@ int listarCliente(ListaDeClientes lc) {
 
 int debito(ListaDeClientes *lc) {
     printf("\nDebito\n");
+    long cpf;
+    printf("Digite seu CPF: ");
+    scanf("%d", &cpf);
+
+    int encontrado = 0;  
+
+    int indexCliente = 0;
+
+    for (int i = 0; i < lc->qtd; i++) {
+        if (lc->c[i].cpf == cpf) {
+            indexCliente = i;
+            encontrado = 1;
+            break 
+        
+        
+            char = senha[20];
+            printf("Digite sua senha: ");
+            while ((c = getchar()) != '\n' && c != EOF) { }
+            fgets(senha, 20, stdin);
+            if (lc->c[i].senha == senha){
+                int debito;
+                printf("Digite o valor a ser debitado: ");
+                scanf("%d", &debito);
+                if (lc->c[i].tipoDeConta == 0){
+                    if (lc->c[i].valor >= -1000){
+                        lc->c[i].valor = lc->c[i].valor - debito * 0.05;
+                    }
+                    
+                }
+                else if(lc->c[i].tipoDeConta == 1){
+                    lc->c[i].valor = lc->c[i].valor - debito * 0.03;
+                }
+            }
+
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Cliente com CPF %d não encontrado na lista.\n", cpf);
+    }
+
 }
