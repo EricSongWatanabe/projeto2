@@ -5,7 +5,7 @@ typedef struct cliente {
     char nome[20];
     long cpf;
     int tipoDeConta;
-    int valor;
+    float valor;
     char senha[20];
 } Cliente;
 
