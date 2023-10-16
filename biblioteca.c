@@ -33,7 +33,7 @@ int criarCliente(ListaDeClientes *lc) {
         lc->c[lc->qtd].cpf = cpf;
         printf("\nTipo de Conta (0 = Comum | 1 = Plus): ");
     }
-    
+
     scanf("%d", &lc->c[lc->qtd].tipoDeConta);
     if (lc->c[lc->qtd].tipoDeConta != 1 && lc->c[lc->qtd].tipoDeConta != 0){
       printf("\nNumero invalido!\n");
@@ -47,14 +47,14 @@ int criarCliente(ListaDeClientes *lc) {
     while ((c = getchar()) != '\n' && c != EOF) { }
     fgets(lc->c[lc->qtd].senha, 20, stdin);
     lc->c[lc->qtd].senha[strcspn(lc->c[lc->qtd].senha, "\n")] = '\0';
-    
+
 
     printf("\n\nNome: %s", lc->c[lc->qtd].nome);
     printf("\nCPF: %d", lc->c[lc->qtd].cpf);
     printf("\nTipo de Conta : %d", lc->c[lc->qtd].tipoDeConta);
     printf("\nValor Inicial: %.2f", lc->c[lc->qtd].valor);
     printf("\nSenha: %s\n\n", lc->c[lc->qtd].senha);
-    
+
     lc->qtd = lc->qtd + 1;
     return 0;
 }
@@ -99,7 +99,7 @@ int debito(ListaDeClientes *lc) {
   scanf("%ld", &cpf);
 
   int indexCliente = buscaCliente(*lc, cpf);
-  
+
   if (indexCliente == -1){
     printf("Cliente nao encontrado");
     return 0;
@@ -112,15 +112,15 @@ int debito(ListaDeClientes *lc) {
   while ((c = getchar()) != '\n' && c != EOF) { }
   fgets(senha, 20, stdin);
   senha[strcspn(senha, "\n")] = '\0';
-  
-  
+
+
   int verificacaoSenha = strcmp(lc->c[indexCliente].senha, senha);
-  
+
   if (verificacaoSenha == 0){
     float debito;
     printf("\nDigite o valor a ser debitado: ");
     scanf("%f", &debito);
-    
+
     if (lc->c[indexCliente].tipoDeConta == 0){
       lc->c[indexCliente].valor = lc->c[indexCliente].valor - 1.05 * debito;
       if (lc->c[indexCliente].valor <= -1000){
@@ -130,7 +130,7 @@ int debito(ListaDeClientes *lc) {
       }
         printf("\nDebito realizado com sucesso!\n");
     }
-      
+
     else if (lc->c[indexCliente].tipoDeConta == 1){
       lc->c[indexCliente].valor = lc->c[indexCliente].valor - 1.03 * debito;
       if (lc->c[indexCliente].valor <= -5000){
@@ -141,12 +141,36 @@ int debito(ListaDeClientes *lc) {
         printf("\nDebito realizado com sucesso!\n");
     }
   }
-    
+
   else {
     printf("\nSenha incorreta.\n");
     return 0;
   }
 
-  
+
     return 0;
+}
+
+int deposito(ListaDeClientes *lc){
+  printf("\nDeposito\n");
+  long cpf;
+  printf("\nDigite seu CPF: ");
+  scanf("%ld", &cpf);
+
+  int indexCliente = buscaCliente(*lc, cpf);
+
+  if (indexCliente == -1){
+    printf("\nCliente nao encontrado\n");
+    return 0;
+  }
+
+  else {
+    float deposito;
+    printf("\nDigite o valor a ser depositado: ");
+    scanf("%f", &deposito);
+    lc->c[indexCliente].valor = lc->c[indexCliente].valor + deposito;
+    printf("\nDeposito realizado com sucesso!\n");
+  }
+  
+  return 0;
 }
