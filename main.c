@@ -5,7 +5,7 @@ int main() {
     int cod;
     char arquivo[] = "clientes";
     ListaDeClientes lc;
-    
+
 
     int opcao;
     do {
@@ -26,6 +26,9 @@ int main() {
         }
         else if (opcao == 4) {
             debito(&lc);
+        }
+        else if (opcao == 5) {
+            deposito(&lc);
         }
         else {
             printf("Opcao nao existente!\n");
