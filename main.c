@@ -16,22 +16,25 @@ int main() {
         if (opcao == 0){
         } 
         else if (opcao == 1){
-            criarCliente(&lc);
+          criarCliente(&lc);
         }
         else if (opcao == 2){
-            deletarCliente(&lc);
+          deletarCliente(&lc);
         }
         else if (opcao == 3) {
-            listarCliente(lc);
+          listarCliente(lc);
         }
         else if (opcao == 4) {
-            debito(&lc);
+          debito(&lc);
         }
         else if (opcao == 5) {
-            deposito(&lc);
+          deposito(&lc);
+        }
+        else if (opcao == 7){
+          transferencia(&lc);
         }
         else {
-            printf("Opcao nao existente!\n");
+          printf("\nOpcao nao existente!\n");
         }
     } while (opcao != 0);
 }

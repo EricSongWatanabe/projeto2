@@ -171,6 +171,59 @@ int deposito(ListaDeClientes *lc){
     lc->c[indexCliente].valor = lc->c[indexCliente].valor + deposito;
     printf("\nDeposito realizado com sucesso!\n");
   }
-  
+
+  return 0;
+}
+
+int transferencia(ListaDeClientes *lc){
+  printf("\nTransferencia\n");
+  long cpf1;
+  printf("\nDigite seu CPF: ");
+  scanf("%ld", &cpf1);
+
+  int indexCliente1 = buscaCliente(*lc, cpf1);
+
+  if (indexCliente1 == -1){
+    printf("\nCliente nao encontrado\n");
+    return 0;
+  }
+
+  char senha[20];
+  printf("\nDigite sua senha: ");
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF) { }
+  fgets(senha, 20, stdin);
+  senha[strcspn(senha, "\n")] = '\0';
+
+  int verificacaoSenha = strcmp(lc->c[indexCliente1].senha, senha);
+
+  if (verificacaoSenha == 0){
+    long cpf2;
+    printf("\nDigite o CPF do destinatario: ");
+    scanf("%ld", &cpf2);
+
+    int indexCliente2 = buscaCliente(*lc, cpf2);
+
+    float valor;
+    printf("\nDigite o valor a ser transferido: ");
+    scanf("%f", &valor);
+    if (lc->c[indexCliente1].tipoDeConta == 0){
+      lc->c[indexCliente2].valor = lc->c[indexCliente2].valor + valor;
+      lc->c[indexCliente1].valor = lc->c[indexCliente1].valor - valor * 1.05;
+    }
+    else if (lc->c[indexCliente1].tipoDeConta == 1){
+      lc->c[indexCliente2].valor = lc->c[indexCliente2].valor + valor;
+      lc->c[indexCliente1].valor = lc->c[indexCliente1].valor - valor * 1.03;
+    }
+    
+    if (indexCliente2 == -1){
+      printf("\nCliente nao encontrado\n");
+      return 0;
+    }
+  }
+  else {
+    printf("\nSenha incorreta.\n");
+    return 0;
+  }
   return 0;
 }
