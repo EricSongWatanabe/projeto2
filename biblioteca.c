@@ -203,7 +203,12 @@ int transferencia(ListaDeClientes *lc){
     scanf("%ld", &cpf2);
 
     int indexCliente2 = buscaCliente(*lc, cpf2);
-
+    
+    if (indexCliente2 == -1){
+      printf("\nCliente nao encontrado\n");
+      return 0;
+    }
+    
     float valor;
     printf("\nDigite o valor a ser transferido: ");
     scanf("%f", &valor);
@@ -216,10 +221,7 @@ int transferencia(ListaDeClientes *lc){
       lc->c[indexCliente1].valor = lc->c[indexCliente1].valor - valor * 1.03;
     }
     
-    if (indexCliente2 == -1){
-      printf("\nCliente nao encontrado\n");
-      return 0;
-    }
+    
   }
   else {
     printf("\nSenha incorreta.\n");
