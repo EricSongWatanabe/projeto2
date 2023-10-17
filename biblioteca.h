@@ -23,6 +23,7 @@ int deletarCliente(ListaDeClientes *lc);
 int listarCliente(ListaDeClientes lc);
 int debito(ListaDeClientes *lc);
 int deposito(ListaDeClientes *lc);
+int transferencia(ListaDeClientes *lc);
 
 
 int salvarLista(ListaDeClientes lc, char nome[]);
