@@ -2,17 +2,26 @@
 #define PROJETO2_BIBLIOTECA_H
 
 typedef struct cliente {
-    char nome[20];
-    long cpf;
-    int tipoDeConta;
-    float valor;
-    char senha[20];
+  char nome[20];
+  long cpf;
+  int tipoDeConta;
+  float valor;
+  char senha[20];
 } Cliente;
 
 typedef struct {
-    Cliente c[1000];
-    int qtd;
+  Cliente c[1000];
+  int qtd;
 } ListaDeClientes;
+
+typedef struct extrato {
+  char acao[255];
+} Extrato;
+
+typedef struct {
+  Extrato e[100];
+  int qtd;
+} ListaDeExtratos;
 
 void printMenu();
 
@@ -28,5 +37,6 @@ int transferencia(ListaDeClientes *lc);
 
 int salvarLista(ListaDeClientes lc, char nome[]);
 int carregarLista(ListaDeClientes *lc, char nome[]);
+
 
 #endif //PROJETO2_BIBLIOTECA_H
