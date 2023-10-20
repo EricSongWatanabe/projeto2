@@ -27,13 +27,16 @@ void printMenu();
 
 int buscaCliente(ListaDeClientes lc, long cpf);
 
-int criarCliente(ListaDeClientes *lc);
+int criarCliente(ListaDeClientes *lc, ListaDeExtratos *le);
 int deletarCliente(ListaDeClientes *lc);
 int listarCliente(ListaDeClientes lc);
-int debito(ListaDeClientes *lc);
-int deposito(ListaDeClientes *lc);
-int transferencia(ListaDeClientes *lc);
+int debito(ListaDeClientes *lc, ListaDeExtratos *le);
+int deposito(ListaDeClientes *lc, ListaDeExtratos *le);
+int extrato(ListaDeClientes *lc, ListaDeExtratos *le, char aquivo1[]);
+int transferencia(ListaDeClientes *lc, ListaDeExtratos *le);
 
+int salvarExtrato(ListaDeExtratos le, char nome[]);
+int carregarExtrato(ListaDeExtratos *le, char nome[]);
 
 int salvarLista(ListaDeClientes lc, char nome[]);
 int carregarLista(ListaDeClientes *lc, char nome[]);
