@@ -8,7 +8,7 @@ void printMenu(){
 
 int buscaCliente(ListaDeClientes lc, long cpf){
   int index = 0;
-  for (index; index < 1000; index++){
+  for (index; index < 10; index++){
     if (lc.c[index].cpf == cpf){
     return index;
     }  
@@ -19,7 +19,7 @@ int buscaCliente(ListaDeClientes lc, long cpf){
 int criarCliente(ListaDeClientes *lc) {
   printf("\nCriar cliente\n");
   int c;
-  while ((c = getchar()) != '\n' && c != EOF) { }
+  // while ((c = getchar()) != '\n' && c != EOF) { }
 
   printf("\nNome: ");
   fgets(lc->c[lc->qtd].nome, 20, stdin);
@@ -28,6 +28,7 @@ int criarCliente(ListaDeClientes *lc) {
   long cpf;
   printf("\nCPF: ");
   scanf("%ld", &cpf);
+  
   int indexCliente = buscaCliente(*lc, cpf);
   if (indexCliente == -1) {
     lc->c[lc->qtd].cpf = cpf;
@@ -75,7 +76,7 @@ int indexCliente = buscaCliente(*lc, cpf);
     lc->c[j] = lc->c[j + 1];
   }
   lc->qtd--;
-  printf("Cliente com CPF %d foi deletado com sucesso.\n", cpf);
+  printf("Cliente com CPF %ld foi deletado com sucesso.\n", cpf);
   return 0;
 }
 
@@ -95,22 +96,23 @@ int listarCliente(ListaDeClientes lc) {
     }
   return 0;
 }
-  
+
 int debito(ListaDeClientes *lc) {
   printf("\nDebito\n");
   long cpf;
   printf("\nDigite seu CPF: ");
   scanf("%ld", &cpf);
-  
+
   int indexCliente = buscaCliente(*lc, cpf);
 
   if (indexCliente == -1){
     printf("\nCliente nao encontrado\n");
     return 0;
   }
-  
+
   float valor;
-  char senha[20];    printf("\nDigite sua senha: ");
+  char senha[20];    
+  printf("\nDigite sua senha: ");
   int c;
   while ((c = getchar()) != '\n' && c != EOF) { }
   fgets(senha, 20, stdin);
@@ -126,7 +128,9 @@ int debito(ListaDeClientes *lc) {
     if (lc->c[indexCliente].tipoDeConta == 0){
       lc->c[indexCliente].valor = lc->c[indexCliente].valor - 1.05 * debito;
       sprintf(lc->c[indexCliente].e[lc->c[indexCliente].qtd].acao, "Acao: Debito | Valor: -%.2f | Taxa: 0.5%%", debito);
+      printf("\n%s", lc->c[indexCliente].e[lc->c[indexCliente].qtd].acao);
       lc->c[indexCliente].qtd = lc->c[indexCliente].qtd + 1;
+      
       if (lc->c[indexCliente].valor <= -1000){
         printf("\nSaldo negativo atingido! Nao foi possivel concluir a acao.\n");
         lc->c[indexCliente].valor = lc->c[indexCliente].valor + 1.05 * debito;
@@ -152,7 +156,7 @@ int debito(ListaDeClientes *lc) {
     printf("\nSenha incorreta.\n");
     return 0;
   }
-  
+
   return 0;
 }
 
@@ -175,6 +179,7 @@ int deposito(ListaDeClientes *lc){
     scanf("%f", &deposito);
     lc->c[indexCliente].valor = lc->c[indexCliente].valor + deposito;
     sprintf(lc->c[indexCliente].e[lc->c[indexCliente].qtd].acao, "Acao: Deposito | Valor: +%.2f | Taxa: 0.0%%", deposito);
+    printf("\n%s", lc->c[indexCliente].e[lc->c[indexCliente].qtd].acao);
     lc->c[indexCliente].qtd = lc->c[indexCliente].qtd + 1;
     printf("\nDeposito realizado com sucesso!\n");
   }
@@ -208,8 +213,8 @@ int extrato(ListaDeClientes *lc, Extratos e){
   int verificacaoSenha = strcmp(lc->c[indexCliente].senha, senha);
 
   if (verificacaoSenha == 0){
-    for (int i = 0; i < lc->qtd; i++){
-    printf("%s\n", lc->c[indexCliente].e[lc->c[indexCliente].qtd].acao);
+    for (int i = 0; i <= lc->c[indexCliente].qtd; i++){
+      printf("\n%s", lc->c[indexCliente].e[i].acao);
     }
   }
   else{
@@ -248,12 +253,12 @@ int transferencia(ListaDeClientes *lc){
     scanf("%ld", &cpf2);
 
     int indexCliente2 = buscaCliente(*lc, cpf2);
-  
+
     if (indexCliente2 == -1){
       printf("\nCliente nao encontrado\n");
       return 0;
     }
-  
+
     float valor;
     printf("\nDigite o valor a ser transferido: ");
     scanf("%f", &valor);
@@ -261,8 +266,13 @@ int transferencia(ListaDeClientes *lc){
       lc->c[indexCliente2].valor = lc->c[indexCliente2].valor + valor;
       sprintf(lc->c[indexCliente2].e[lc->c[indexCliente2].qtd].acao, "Acao: Transferencia | Valor: +%.2f | Taxa: 0.0%%", valor);
       lc->c[indexCliente2].qtd = lc->c[indexCliente2].qtd + 1;
-      
+
       lc->c[indexCliente1].valor = lc->c[indexCliente1].valor - valor * 1.05;
+      if (lc->c[indexCliente1].valor <= -1000){
+        printf("\nSaldo negativo atingido! Nao foi possivel concluir a acao.\n");
+        lc->c[indexCliente1].valor = lc->c[indexCliente1].valor + 1.05 * valor;
+        return 0;
+      }
       sprintf(lc->c[indexCliente1].e[lc->c[indexCliente1].qtd].acao, "Acao: Transferencia | Valor: -%.2f | Taxa: 0.5%%", valor);
       lc->c[indexCliente1].qtd = lc->c[indexCliente1].qtd + 1;
     }
@@ -270,14 +280,19 @@ int transferencia(ListaDeClientes *lc){
       lc->c[indexCliente2].valor = lc->c[indexCliente2].valor + valor;
       sprintf(lc->c[indexCliente2].e[lc->c[indexCliente2].qtd].acao, "Acao: Transferencia | Valor: +%.2f | Taxa: 0.0%%", valor);
       lc->c[indexCliente2].qtd = lc->c[indexCliente2].qtd + 1;
-      
+
       lc->c[indexCliente1].valor = lc->c[indexCliente1].valor - valor * 1.03;
+      if (lc->c[indexCliente1].valor <= -1000){
+        printf("\nSaldo negativo atingido! Nao foi possivel concluir a acao.\n");
+        lc->c[indexCliente1].valor = lc->c[indexCliente1].valor + 1.03 * valor;
+        return 0;
+      }
       sprintf(lc->c[indexCliente1].e[lc->c[indexCliente1].qtd].acao, "Acao: Transferencia | Valor: -%.2f | Taxa: 0.3%%", valor);
       lc->c[indexCliente1].qtd = lc->c[indexCliente1].qtd + 1;
     }
 
-
   }
+  
   else {
     printf("\nSenha incorreta.\n");
   return 0;
@@ -285,43 +300,43 @@ int transferencia(ListaDeClientes *lc){
   return 0;
 }
 
-int carregarExtrato(Extratos *e, char arquivo1[]){
-  FILE *f = fopen(arquivo1, "r");
-  if (f == NULL){ 
-    return 1;
-  }
-  fread(e, sizeof(Extratos), 1, f); 
-  fclose(f); 
-  return 0;
-}
+// int carregarExtrato(Extratos *e, char arquivo1[]){
+//   FILE *f = fopen(arquivo1, "r");
+//   if (f == NULL){ 
+//     return 1;
+//   }
+//   fread(e, sizeof(Extratos), 1, f); 
+//   fclose(f); 
+//   return 0;
+// }
 
-int salvarExtrato(Extratos e, char arquivo1[]){
-  FILE *f = fopen(arquivo1, "w"); 
-  if (f == NULL){ 
-    return 1;
-  }
-  fwrite(&e, sizeof(Extratos), 1, f);
-  fclose(f); 
-  return 0;
-}
+// int salvarExtrato(Extratos e, char arquivo1[]){
+//   FILE *f = fopen(arquivo1, "w"); 
+//   if (f == NULL){ 
+//     return 1;
+//   }
+//   fwrite(&e, sizeof(Extratos), 1, f);
+//   fclose(f); 
+//   return 0;
+// }
 
 
-int carregarLista(ListaDeClientes *lc, char arquivo[]){
-  FILE *f = fopen(arquivo, "rb");
-  if (f == NULL){ 
-  return 1;
-  }
-  fread(lc, sizeof(ListaDeClientes), 1, f); 
-  fclose(f); 
-  return 0;
-}
+// int carregarLista(ListaDeClientes *lc, char arquivo[]){
+//   FILE *f = fopen(arquivo, "rb");
+//   if (f == NULL){ 
+//   return 1;
+//   }
+//   fread(lc, sizeof(ListaDeClientes), 1, f); 
+//   fclose(f); 
+//   return 0;
+// }
 
-int salvarLista(ListaDeClientes lc, char arquivo[]){
-  FILE *f = fopen(arquivo, "wb"); 
-  if (f == NULL){ 
-    return 1;
-  }
-  fwrite(&lc, sizeof(ListaDeClientes), 1, f);
-  fclose(f); 
-  return 0;
-}
+// int salvarLista(ListaDeClientes lc, char arquivo[]){
+//   FILE *f = fopen(arquivo, "wb"); 
+//   if (f == NULL){ 
+//     return 1;
+//   }
+//   fwrite(&lc, sizeof(ListaDeClientes), 1, f);
+//   fclose(f); 
+//   return 0;
+// }
