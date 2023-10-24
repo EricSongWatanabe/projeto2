@@ -33,11 +33,8 @@ int deposito(ListaDeClientes *lc);
 int extrato(ListaDeClientes *lc, Extratos e);
 int transferencia(ListaDeClientes *lc);
 
-// int salvarExtrato(Extratos e, char nome[]);
-// int carregarExtrato(Extratos *e, char nome[]);
-
-// int salvarLista(ListaDeClientes lc, char nome[]);
-// int carregarLista(ListaDeClientes *lc, char nome[]);
+int salvarLista(ListaDeClientes lc, char nome[]);
+int carregarLista(ListaDeClientes *lc, char nome[]);
 
 
 #endif //PROJETO2_BIBLIOTECA_H

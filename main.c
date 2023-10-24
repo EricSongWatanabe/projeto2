@@ -2,20 +2,17 @@
 #include "biblioteca.h"
 
 int main() {
-  // int cod;
-  // char arquivo[] = "clientes";
+  int cod;
+  char arquivo[] = "clientes";
   ListaDeClientes lc;
 
-  // int codE;
-  // char arquivo1[] = "extratos.txt";
   Extratos e;
 
-  // cod = carregarLista(&lc, arquivo); 
-  // if (cod == 1){
-  //     lc.qtd = 0;
-  // }
+  cod = carregarLista(&lc, arquivo); 
+  if (cod == 1){
+      lc.qtd = 0;
+  }
 
-  // codE = carregarExtrato(&e, arquivo1);
   int opcao;
   do {
     printMenu();
@@ -52,13 +49,9 @@ int main() {
     }
   } while (opcao != 0);
 
-  // cod = salvarLista(lc, arquivo); 
-  // if (cod != 0){
-  //     printf("\nErro ao salvar os clientes!\n");
-  // }
+  cod = salvarLista(lc, arquivo); 
+  if (cod != 0){
+      printf("\nErro ao salvar os clientes!\n");
+  }
 
-  // codE = salvarExtrato(e, arquivo1); 
-  // if (codE != 0){
-  //     printf("\nErro ao salvar os extratos!\n");
-  // }
 }
