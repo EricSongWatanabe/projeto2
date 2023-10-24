@@ -189,7 +189,7 @@ int deposito(ListaDeClientes *lc){
 
 int extrato(ListaDeClientes *lc, Extratos e){
   printf("\nExtrato\n");
-
+  
   long cpf;
   printf("\nDigite seu CPF: ");
   scanf("%ld", &cpf);
@@ -213,9 +213,11 @@ int extrato(ListaDeClientes *lc, Extratos e){
   int verificacaoSenha = strcmp(lc->c[indexCliente].senha, senha);
 
   if (verificacaoSenha == 0){
+    FILE *f = fopen("extrato.txt", "w");
     for (int i = 0; i <= lc->c[indexCliente].qtd; i++){
-      printf("\n%s", lc->c[indexCliente].e[i].acao);
+      fprintf(f, "\n%s", lc->c[indexCliente].e[i].acao);
     }
+    fclose(f);
   }
   else{
     printf("\nSenha incorreta!\n");
@@ -300,43 +302,23 @@ int transferencia(ListaDeClientes *lc){
   return 0;
 }
 
-// int carregarExtrato(Extratos *e, char arquivo1[]){
-//   FILE *f = fopen(arquivo1, "r");
-//   if (f == NULL){ 
-//     return 1;
-//   }
-//   fread(e, sizeof(Extratos), 1, f); 
-//   fclose(f); 
-//   return 0;
-// }
 
-// int salvarExtrato(Extratos e, char arquivo1[]){
-//   FILE *f = fopen(arquivo1, "w"); 
-//   if (f == NULL){ 
-//     return 1;
-//   }
-//   fwrite(&e, sizeof(Extratos), 1, f);
-//   fclose(f); 
-//   return 0;
-// }
+int carregarLista(ListaDeClientes *lc, char arquivo[]){
+  FILE *f = fopen(arquivo, "rb");
+  if (f == NULL){ 
+  return 1;
+  }
+  fread(lc, sizeof(ListaDeClientes), 1, f); 
+  fclose(f); 
+  return 0;
+}
 
-
-// int carregarLista(ListaDeClientes *lc, char arquivo[]){
-//   FILE *f = fopen(arquivo, "rb");
-//   if (f == NULL){ 
-//   return 1;
-//   }
-//   fread(lc, sizeof(ListaDeClientes), 1, f); 
-//   fclose(f); 
-//   return 0;
-// }
-
-// int salvarLista(ListaDeClientes lc, char arquivo[]){
-//   FILE *f = fopen(arquivo, "wb"); 
-//   if (f == NULL){ 
-//     return 1;
-//   }
-//   fwrite(&lc, sizeof(ListaDeClientes), 1, f);
-//   fclose(f); 
-//   return 0;
-// }
+int salvarLista(ListaDeClientes lc, char arquivo[]){
+  FILE *f = fopen(arquivo, "wb"); 
+  if (f == NULL){ 
+    return 1;
+  }
+  fwrite(&lc, sizeof(ListaDeClientes), 1, f);
+  fclose(f); 
+  return 0;
+}
